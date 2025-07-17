@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giyim Mağazası Admin Paneli - Dashboard</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 250px;
+        height: 100vh;
+        background-color: #2c3e50;
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar h2 {
+        text-align: center;
+        padding: 20px 0;
+        margin: 0;
+        background-color: #1abc9c;
+      }
+
+      .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .sidebar ul li {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #34495e;
+      }
+
+      .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .sidebar ul li:hover {
+        background-color: #34495e;
+      }
+
+      .main-content {
+        margin-left: 250px;
+        padding: 20px;
+        flex: 1;
+      }
+
+      .main-content h1 {
+        color: #2c3e50;
+      }
+
+      .card {
+        background-color: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .card h3 {
+        margin-bottom: 10px;
+        color: #16a085;
+      }
+
+      .header {
+        background-color: #2c3e50;
+        color: white;
+        padding: 10px 20px;
+        text-align: right;
+        position: fixed;
+        top: 0;
+        left: 250px;
+        width: calc(100% - 250px);
+        z-index: 1;
+      }
+
+      .header a {
+        color: white;
+        text-decoration: none;
+        margin-right: 20px;
+      }
+
+      .header a:hover {
+        text-decoration: underline;
+      }
+
+      .logout-btn {
+        color: white;
+        background-color: #e74c3c;
+        padding: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+
+      .logout-btn:hover {
+        background-color: #c0392b;
+      }
+
+      .dashboard-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 30%;
+        text-align: center;
+      }
+
+      .stat-card h3 {
+        margin: 0;
+        font-size: 24px;
+        color: #16a085;
+      }
+
+      .stat-card p {
+        margin: 5px 0 0;
+        font-size: 18px;
+        color: #2c3e50;
+      }
+
+      .chart {
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      .chart img {
+        width: 100%;
+        height: auto;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      .table th,
+      .table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      .table th {
+        background-color: #2c3e50;
+        color: white;
+      }
+
+      .table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .footer {
+        background-color: #2c3e50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        left: 250px;
+        width: calc(100% - 250px);
+        border-top: 1px solid #34495e;
+      }
+
+      .footer .copyright {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Giyim Mağazası</h2>
+      <ul>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Ürün Yönetimi</a></li>
+        <li><a href="#">Sipariş Yönetimi</a></li>
+        <li><a href="#">Kategoriler</a></li>
+        <li><a href="#">Stok Durumu</a></li>
+        <li><a href="#">Müşteriler</a></li>
+        <li><a href="#">Raporlar</a></li>
+      </ul>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <a href="#">Profil</a>
+      <a href="#" class="logout-btn">Çıkış Yap</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>Dashboard</h1>
+
+      <!-- İstatistik Kartları -->
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <h3>₺60,000</h3>
+          <p>Toplam Satış</p>
+        </div>
+        <div class="stat-card">
+          <h3>200</h3>
+          <p>Toplam Sipariş</p>
+        </div>
+        <div class="stat-card">
+          <h3>120</h3>
+          <p>Yeni Müşteriler</p>
+        </div>
+      </div>
+
+      <!-- Satış Grafiği -->
+      <div class="card">
+        <h3>Aylık Satış Grafiği</h3>
+        <div class="chart">
+          <img src="sales_chart_placeholder.png" alt="Aylık Satış Grafiği" />
+        </div>
+      </div>
+
+      <!-- Son Siparişler -->
+      <div class="card">
+        <h3>Son Siparişler</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Sipariş ID</th>
+              <th>Müşteri Adı</th>
+              <th>Ürün Adı</th>
+              <th>Toplam Fiyat</th>
+              <th>Tarih</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#00123</td>
+              <td>Ali Yılmaz</td>
+              <td>T-Shirt</td>
+              <td>₺49.99</td>
+              <td>12/09/2024</td>
+            </tr>
+            <tr>
+              <td>#00124</td>
+              <td>Ayşe Demir</td>
+              <td>Kot Pantolon</td>
+              <td>₺89.99</td>
+              <td>11/09/2024</td>
+            </tr>
+            <tr>
+              <td>#00125</td>
+              <td>Mehmet Kara</td>
+              <td>Kaban</td>
+              <td>₺149.99</td>
+              <td>10/09/2024</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="copyright">
+        &copy; Copyright <strong><span>alcshop.com.tr</span></strong
+        >. Tüm hakları saklıdır.
+      </div>
+    </footer>
+  </body>
+</html>

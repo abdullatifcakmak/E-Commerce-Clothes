@@ -1,0 +1,180 @@
+<?php 
+include "baglanti.php";
+
+
+$username_err = "";
+$email_err = "";
+$password_err = "";
+$password_again_err = "";
+
+
+if(isset($_POST["kaydet"]))
+{
+
+
+
+  // Kullanıcı adı doğrulama
+  if(empty($_POST["kullaniciadi"]))
+  {
+    $username_err = "Kullanıcı adı boş bırakılamaz.";
+  }
+  else if(strlen($_POST["kullaniciadi"])<5)
+  {
+    $username_err = "Kullanıcı adı 5 harften az olamaz.";
+  }
+  else if (!preg_match('/^[a-z\d_]{5,20}$/i', $_POST["kullaniciadi"])) {
+    $username_err = "Kullanıcı adı büyük/küçük harf ve rakamdan oluşmalıdır.";
+    }
+    else{
+      $username = $_POST["kullaniciadi"];
+    }
+
+
+
+
+    // E-posta doğrulama
+    if(empty($_POST["email"]))
+    {
+      $email_err = "Email boş bırakılamaz.";
+    }
+    else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+      $email_err = "Geçersiz Email formatı";
+    }
+    else{
+      $email = $_POST["email"];
+    }
+
+
+
+
+    // Parola doğrulama
+    if(empty($_POST["parola"]))
+    {
+      $password_err = "Şifre boş bırakılamaz.";
+    }
+    else if(strlen($_POST["parola"])<8)
+    {
+      $password_err = "Şifre 8 haneden az olamaz.";
+    }
+    else{
+      $password = password_hash($_POST["parola"],PASSWORD_DEFAULT);
+    }
+
+
+
+
+    // Parola tekrar doğrulama
+    if(empty($_POST["parolatkr"]))
+    {
+      $password_again_err = "Şifre boş bırakılamaz.";
+    }
+    else if ($_POST["parola"] != $_POST["parolatkr"])
+    {
+      $password_again_err = "Şifreler uyuşmuyor.";
+    }
+    else{
+      $parolatkr = $_POST["parolatkr"];
+    }
+
+
+
+  if(isset($username) && isset($email) && isset($password))
+    {
+
+  $ekle = "INSERT INTO kullanicilar (kullanici_adi,email,parola) VALUES ('$username','$email','$password')";
+
+  $calistirekle = mysqli_query($baglanti,$ekle);
+
+  if($calistirekle)
+  {
+
+    echo '<div class="alert alert-success" role="alert">
+  Kayıt Başarılı Bir Şekilde Eklendi.
+</div>';
+  }
+  else{
+    echo'<div class="alert alert-danger" role="alert">
+  Kayıt Esnasında Sorun Oluştu!
+</div>';
+  }
+
+  mysqli_close($baglanti);
+
+}
+}
+
+
+$pageTitle = "ALC | Kayıt Ol";
+include "header.php";
+?>
+
+<div class="card p-5 m-5">
+<form action="sign.php" method="POST">
+<div class="ust-baslik pb-5">
+  <h2>Kayıt Ol</h2>
+</div>
+
+<div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Kullanıcı Adı</label>
+    <input type="text" class="form-control 
+    <?php  
+    if(!empty($username_err))
+    {
+      echo "is-invalid";
+    }
+    ?>" 
+    id="exampleInputEmail1" name="kullaniciadi" >
+    <div id="validationServer03Feedback" class="invalid-feedback">
+      <?php echo $username_err ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email</label>
+    <input type="text" class="form-control     
+    <?php  
+    if(!empty($email_err))
+    {
+      echo "is-invalid";
+    }
+    ?>" 
+    id="exampleInputEmail1" name="email">
+    <div id="validationServer03Feedback" class="invalid-feedback">
+    <?php echo $email_err ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Şifre</label>
+    <input type="password" class="form-control     <?php  
+    if(!empty($password_err))
+    {
+      echo "is-invalid";
+    }
+    ?>" 
+    id="exampleInputPassword1" name="parola">
+    <div id="validationServer03Feedback" class="invalid-feedback">
+    <?php echo $password_err ?>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Şifreyi Onaylayınız</label>
+    <input type="password" class="form-control     <?php  
+    if(!empty($password_again_err))
+    {
+      echo "is-invalid";
+    }
+    ?>" 
+    id="exampleInputPassword1" name="parolatkr">
+    <div id="validationServer03Feedback" class="invalid-feedback">
+    <?php echo $password_again_err ?>
+    </div>
+  </div>
+  <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Beni hatırla</label>
+  </div>
+  <button type="submit" name="kaydet" class="btn btn-primary">Kayıt ol</button>
+</form>
+</div>
+
+
+    <?php include "footer.php" ?>
